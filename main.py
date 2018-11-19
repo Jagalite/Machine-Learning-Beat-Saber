@@ -21,7 +21,7 @@ with open('Training/Beat it/Easy.json', 'r') as jsonFile:
     # song.export("Training/Beat it/Beat It.wav", format="wav")
     # sample_rate, samples = wavfile.read('Training/Beat it/Beat It.wav')
     # frequencies, times, spectrogram = signal.spectrogram(samples, sample_rate)
-    # inputData = np.asarray( song, dtype="int32" )
+    # inputData = np.asarray( spectrogram, dtype="int32" )
     
     song = AudioSegment.from_ogg("Training/Beat it/Beat It.ogg").get_array_of_samples()
     inputData = np.asarray( song, dtype="int32" )
@@ -47,7 +47,7 @@ songsData = np.asarray(songsData)
 songsLabel = np.asarray(songsLabel)
 
 model = Sequential()
-model.add(Dense(units=878, activation='relu', input_dim=len(inputData)))
+model.add(Dense(units=20, activation='relu', input_shape=inputData.shape))
 model.add(Dense(units=878, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='sgd',metrics=['accuracy'])
 model.fit(songsData, songsLabel, epochs=5, batch_size=10)
